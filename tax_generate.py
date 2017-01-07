@@ -22,8 +22,9 @@ def main():
     elif var == "n":
         passive = 0
 
-    tx = calculate_tax.Tax
-
+    income = int(active)+int(passive)
+    tax = calculate_tax.Tax.income_tax(income)
+    
 
 
 
