@@ -13,20 +13,21 @@ from modules import calculate_tax
 
 # Main Loop
 def main():
-    # Request User Income Data
-    active = input("Type your active income in AUD: ")
-    var = input("Do you have any passive income (y/n)?: ")
 
-    if var == "y":
-        passive = input("Type your passive income in AUD: ")
-    elif var == "n":
-        passive = 0
+    # Get the objects
+    tx = calculate_tax.Tax
+    inter = calculate_tax.Interface
 
-    income = int(active)+int(passive)
-    tax = calculate_tax.Tax.income_tax(income)
-    
+    # Calulate net income
+    income = inter.user_income()
+    tax = tx.income_tax(income)
+    net_income = income - tax
 
+    # get the income distribution
+    (mortgage,emergency,managed,side_investment,bills) = tx.income_distribution(net_income)
+    income_array = [int(mortgage),int(emergency),int(managed),int(side_investment),int(bills)]
 
+    inter.distribution(income_array)
 
 if __name__ == "__main__":
     try:
